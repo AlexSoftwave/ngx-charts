@@ -1,5 +1,5 @@
 {
-  "name": "@swimlane/ngx-charts",
+  "name": "@swimlane/ngx-charts-custom",
   "version": "7.0.1",
   "description": "Declarative Charting Framework for Angular2 and beyond!",
   "main": "release/index.js",
