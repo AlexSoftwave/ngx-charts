@@ -54,7 +54,7 @@ export class YAxisComponent implements OnChanges {
   @Input() labelText;
   @Input() yAxisTickInterval;
   @Input() yAxisTickCount: any;
-  @Input() yOrient: string = 'left';
+  @Input() yOrient: string = 'right';
   @Input() referenceLines;
   @Input() showRefLines;
   @Input() showRefLabels;
@@ -80,6 +80,7 @@ export class YAxisComponent implements OnChanges {
   update(): void {
     this.offset = this.yAxisOffset;
     if (this.yOrient === 'right') {
+      this.offset =  -15;
       this.labelOffset = 65;
       this.transform = `translate(${this.offset + this.dims.width} , 0)`;
     } else {

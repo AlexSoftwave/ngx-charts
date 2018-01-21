@@ -12,7 +12,7 @@ import { YAxisTicksComponent } from './y-axis-ticks.component';
 var YAxisComponent = /** @class */ (function () {
     function YAxisComponent() {
         this.showGridLines = false;
-        this.yOrient = 'left';
+        this.yOrient = 'right';
         this.dimensionsChanged = new EventEmitter();
         this.yAxisClassName = 'y axis';
         this.yAxisOffset = -5;
@@ -28,6 +28,7 @@ var YAxisComponent = /** @class */ (function () {
     YAxisComponent.prototype.update = function () {
         this.offset = this.yAxisOffset;
         if (this.yOrient === 'right') {
+            this.offset = -15;
             this.labelOffset = 65;
             this.transform = "translate(" + (this.offset + this.dims.width) + " , 0)";
         }

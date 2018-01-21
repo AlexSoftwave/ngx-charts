@@ -69,6 +69,8 @@ import { BaseChartComponent } from '../common/base-chart.component';
           [colors]="colors"
           [series]="group.series"
           [dims]="dims"
+          [enableBarValues]="enableBarValues"
+          [barValuesAppendString]="barValuesAppendString"
           [gradient]="gradient"
           [tooltipDisabled]="tooltipDisabled"
           [tooltipTemplate]="tooltipTemplate"
@@ -120,6 +122,8 @@ export class BarVertical2DComponent extends BaseChartComponent {
   @Input() roundDomains: boolean = false;
   @Input() roundEdges: boolean = true;
   @Input() yScaleMax: number;
+  @Input() enableBarValues: boolean;
+  @Input() barValuesAppendString: string;
 
   @Output() activate: EventEmitter<any> = new EventEmitter();
   @Output() deactivate: EventEmitter<any> = new EventEmitter();
@@ -135,7 +139,7 @@ export class BarVertical2DComponent extends BaseChartComponent {
   valueScale: any;
   transform: string;
   colors: ColorHelper;
-  margin = [10, 20, 10, 20];
+  margin = [25, 0, 10, 0];
   xAxisHeight: number = 0;
   yAxisWidth: number = 0;
   legendOptions: any;
@@ -170,7 +174,7 @@ export class BarVertical2DComponent extends BaseChartComponent {
     this.setColors();
     this.legendOptions = this.getLegendOptions();
 
-    this.transform = `translate(${ this.dims.xOffset } , ${ this.margin[0] })`;
+    this.transform = `translate(0 , ${ this.margin[0] })`;
   }
 
   getGroupScale(): any {

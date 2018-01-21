@@ -13,6 +13,9 @@ export declare class BarComponent implements OnChanges {
     isActive: boolean;
     stops: any[];
     animations: boolean;
+    showvalue: string;
+    enableBarValues: boolean;
+    barValuesAppendString: string;
     select: EventEmitter<{}>;
     activate: EventEmitter<{}>;
     deactivate: EventEmitter<{}>;

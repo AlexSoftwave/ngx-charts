@@ -29,6 +29,9 @@ import { formatLabel } from '../common/label.helper';
       [fill]="bar.color"
       [stops]="bar.gradientStops"
       [data]="bar.data"
+      [showvalue]="bar.showvalue"
+      [enableBarValues]="enableBarValues"
+      [barValuesAppendString]="barValuesAppendString"
       [orientation]="'vertical'"
       [roundEdges]="bar.roundEdges"
       [gradient]="gradient"
@@ -73,6 +76,8 @@ export class SeriesVerticalComponent implements OnChanges {
   @Input() tooltipTemplate: TemplateRef<any>;
   @Input() roundEdges: boolean;
   @Input() animations: boolean = true;
+  @Input() enableBarValues: boolean;
+  @Input() barValuesAppendString: string;
 
   @Output() select = new EventEmitter();
   @Output() activate = new EventEmitter();
@@ -117,7 +122,8 @@ export class SeriesVerticalComponent implements OnChanges {
         formattedLabel,
         height: 0,
         x: 0,
-        y: 0
+        y: 0,
+        showvalue: value
       };
 
       if (this.type === 'standard') {

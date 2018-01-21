@@ -222,6 +222,18 @@ var BarComponent = /** @class */ (function () {
         __metadata("design:type", Boolean)
     ], BarComponent.prototype, "animations", void 0);
     __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], BarComponent.prototype, "showvalue", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], BarComponent.prototype, "enableBarValues", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], BarComponent.prototype, "barValuesAppendString", void 0);
+    __decorate([
         Output(),
         __metadata("design:type", Object)
     ], BarComponent.prototype, "select", void 0);
@@ -248,7 +260,7 @@ var BarComponent = /** @class */ (function () {
     BarComponent = __decorate([
         Component({
             selector: 'g[ngx-charts-bar]',
-            template: "\n    <svg:defs *ngIf=\"hasGradient\">\n      <svg:g ngx-charts-svg-linear-gradient\n        [orientation]=\"orientation\"\n        [name]=\"gradientId\"\n        [stops]=\"gradientStops\"\n      />\n    </svg:defs>\n    <svg:path\n      class=\"bar\"\n      stroke=\"none\"\n      [class.active]=\"isActive\"\n      [attr.d]=\"path\"\n      [attr.fill]=\"hasGradient ? gradientFill : fill\"\n      (click)=\"select.emit(data)\"\n    />\n  ",
+            template: "\n    <svg:defs *ngIf=\"hasGradient\">\n      <svg:g ngx-charts-svg-linear-gradient\n        [orientation]=\"orientation\"\n        [name]=\"gradientId\"\n        [stops]=\"gradientStops\"\n      />\n    </svg:defs>\n    <svg:path\n      class=\"bar\"\n      stroke=\"none\"\n      [class.active]=\"isActive\"\n      [attr.d]=\"path\"\n      [attr.fill]=\"hasGradient ? gradientFill : fill\"\n      (click)=\"select.emit(data)\"\n    />\n    <svg:text *ngIf=\"enableBarValues\"\n      font-size=\"11\"\n      text-anchor=\"middle\"\n      style=\"direction:ltr;\"\n      [attr.x]=\"x+width/2\"\n      [attr.y]=\"y-10\"\n      [attr.width]=\"width\"\n      >\n      {{showvalue}}{{barValuesAppendString}}\n    </svg:text>\n  ",
             changeDetection: ChangeDetectionStrategy.OnPush
         }),
         __metadata("design:paramtypes", [ElementRef])

@@ -31,6 +31,16 @@ import { id } from '../utils/id';
       [attr.fill]="hasGradient ? gradientFill : fill"
       (click)="select.emit(data)"
     />
+    <svg:text *ngIf="enableBarValues"
+      font-size="11"
+      text-anchor="middle"
+      style="direction:ltr;"
+      [attr.x]="x+width/2"
+      [attr.y]="y-10"
+      [attr.width]="width"
+      >
+      {{showvalue}}{{barValuesAppendString}}
+    </svg:text>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -49,6 +59,9 @@ export class BarComponent implements OnChanges {
   @Input() isActive: boolean = false;
   @Input() stops: any[];
   @Input() animations: boolean = true;
+  @Input() showvalue: string;
+  @Input() enableBarValues: boolean;
+  @Input() barValuesAppendString: string;
 
   @Output() select = new EventEmitter();
   @Output() activate = new EventEmitter();
