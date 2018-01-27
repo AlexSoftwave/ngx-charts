@@ -28,7 +28,7 @@ import { id } from '../utils/id';
       stroke="none"
       [class.active]="isActive"
       [attr.d]="path"
-      [attr.fill]="hasGradient ? gradientFill : fill"
+      [attr.fill]="customGroupColor? barid==0?'url(#diagonalHatch'+customGroupColor.replace('#','')+')':customGroupColor  :  hasGradient ? gradientFill : fill"
       (click)="select.emit(data)"
     />
     <svg:text *ngIf="enableBarValues"
@@ -36,11 +36,23 @@ import { id } from '../utils/id';
       text-anchor="middle"
       style="direction:ltr;"
       [attr.x]="x+width/2"
-      [attr.y]="y-10"
+      [attr.y]="showvalue>0?y-10:y+height+15"
       [attr.width]="width"
       >
       {{showvalue}}{{barValuesAppendString}}
     </svg:text>
+    <svg:text *ngIf="showBarNames"
+      font-size="12"
+      text-anchor="middle"
+      style="direction:rtl;"
+      [attr.x]="x+width/2"
+      [attr.y]="y+height+25"
+      [attr.width]="width"
+      >
+      {{regularLabelShort}}
+      <title>{{regularLabel}}</title>
+    </svg:text>
+
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -59,9 +71,14 @@ export class BarComponent implements OnChanges {
   @Input() isActive: boolean = false;
   @Input() stops: any[];
   @Input() animations: boolean = true;
-  @Input() showvalue: string;
+  @Input() showvalue: number;
   @Input() enableBarValues: boolean;
   @Input() barValuesAppendString: string;
+  @Input() customGroupColor: string;
+  @Input() barid: number;
+  @Input() showBarNames: boolean;
+  @Input() regularLabel: string;
+  @Input() regularLabelShort: string;
 
   @Output() select = new EventEmitter();
   @Output() activate = new EventEmitter();

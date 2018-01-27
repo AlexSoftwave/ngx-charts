@@ -223,7 +223,7 @@ var BarComponent = /** @class */ (function () {
     ], BarComponent.prototype, "animations", void 0);
     __decorate([
         Input(),
-        __metadata("design:type", String)
+        __metadata("design:type", Number)
     ], BarComponent.prototype, "showvalue", void 0);
     __decorate([
         Input(),
@@ -233,6 +233,26 @@ var BarComponent = /** @class */ (function () {
         Input(),
         __metadata("design:type", String)
     ], BarComponent.prototype, "barValuesAppendString", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], BarComponent.prototype, "customGroupColor", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], BarComponent.prototype, "barid", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], BarComponent.prototype, "showBarNames", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], BarComponent.prototype, "regularLabel", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], BarComponent.prototype, "regularLabelShort", void 0);
     __decorate([
         Output(),
         __metadata("design:type", Object)
@@ -260,7 +280,7 @@ var BarComponent = /** @class */ (function () {
     BarComponent = __decorate([
         Component({
             selector: 'g[ngx-charts-bar]',
-            template: "\n    <svg:defs *ngIf=\"hasGradient\">\n      <svg:g ngx-charts-svg-linear-gradient\n        [orientation]=\"orientation\"\n        [name]=\"gradientId\"\n        [stops]=\"gradientStops\"\n      />\n    </svg:defs>\n    <svg:path\n      class=\"bar\"\n      stroke=\"none\"\n      [class.active]=\"isActive\"\n      [attr.d]=\"path\"\n      [attr.fill]=\"hasGradient ? gradientFill : fill\"\n      (click)=\"select.emit(data)\"\n    />\n    <svg:text *ngIf=\"enableBarValues\"\n      font-size=\"11\"\n      text-anchor=\"middle\"\n      style=\"direction:ltr;\"\n      [attr.x]=\"x+width/2\"\n      [attr.y]=\"y-10\"\n      [attr.width]=\"width\"\n      >\n      {{showvalue}}{{barValuesAppendString}}\n    </svg:text>\n  ",
+            template: "\n    <svg:defs *ngIf=\"hasGradient\">\n      <svg:g ngx-charts-svg-linear-gradient\n        [orientation]=\"orientation\"\n        [name]=\"gradientId\"\n        [stops]=\"gradientStops\"\n      />\n    </svg:defs>\n    <svg:path\n      class=\"bar\"\n      stroke=\"none\"\n      [class.active]=\"isActive\"\n      [attr.d]=\"path\"\n      [attr.fill]=\"customGroupColor? barid==0?'url(#diagonalHatch'+customGroupColor.replace('#','')+')':customGroupColor  :  hasGradient ? gradientFill : fill\"\n      (click)=\"select.emit(data)\"\n    />\n    <svg:text *ngIf=\"enableBarValues\"\n      font-size=\"11\"\n      text-anchor=\"middle\"\n      style=\"direction:ltr;\"\n      [attr.x]=\"x+width/2\"\n      [attr.y]=\"showvalue>0?y-10:y+height+15\"\n      [attr.width]=\"width\"\n      >\n      {{showvalue}}{{barValuesAppendString}}\n    </svg:text>\n    <svg:text *ngIf=\"showBarNames\"\n      font-size=\"12\"\n      text-anchor=\"middle\"\n      style=\"direction:rtl;\"\n      [attr.x]=\"x+width/2\"\n      [attr.y]=\"y+height+25\"\n      [attr.width]=\"width\"\n      >\n      {{regularLabelShort}}\n      <title>{{regularLabel}}</title>\n    </svg:text>\n\n  ",
             changeDetection: ChangeDetectionStrategy.OnPush
         }),
         __metadata("design:paramtypes", [ElementRef])

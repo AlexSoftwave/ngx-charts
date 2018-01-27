@@ -19,7 +19,7 @@ import { formatLabel } from '../common/label.helper';
   selector: 'g[ngx-charts-series-vertical]',
   template: `
     <svg:g ngx-charts-bar
-      *ngFor="let bar of bars; trackBy: trackBy"
+      *ngFor="let bar of bars; let i = index; trackBy: trackBy"
       [@animationState]="'active'"
       [@.disabled]="!animations"
       [width]="bar.width"
@@ -29,12 +29,17 @@ import { formatLabel } from '../common/label.helper';
       [fill]="bar.color"
       [stops]="bar.gradientStops"
       [data]="bar.data"
+      [showBarNames]="showBarNames"
+      [regularLabel]="bar.regularLabel"
+      [regularLabelShort]="bar.regularLabelShort"
       [showvalue]="bar.showvalue"
       [enableBarValues]="enableBarValues"
       [barValuesAppendString]="barValuesAppendString"
       [orientation]="'vertical'"
       [roundEdges]="bar.roundEdges"
       [gradient]="gradient"
+      [barid]="i"
+      [customGroupColor]="customGroupColor"
       [isActive]="isActive(bar.data)"
       (select)="onClick($event)"
       (activate)="activate.emit($event)"
@@ -48,6 +53,10 @@ import { formatLabel } from '../common/label.helper';
       [tooltipContext]="bar.data"
       [animations]="animations">
     </svg:g>
+    <svg:pattern *ngIf = "customGroupColor" id="diagonalHatch{{customGroupColor.replace('#','')}}" width="5" height="5" patternTransform="rotate(50 0 0)" patternUnits="userSpaceOnUse">
+      <svg:rect [attr.fill]="customGroupColor" width="14" height="14"></rect>
+      <svg:line x1="0" y1="0" x2="0" y2="10" style="stroke:#fff; stroke-width:8"></line>
+    </pattern>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
@@ -78,6 +87,8 @@ export class SeriesVerticalComponent implements OnChanges {
   @Input() animations: boolean = true;
   @Input() enableBarValues: boolean;
   @Input() barValuesAppendString: string;
+  @Input() customGroupColor: string;
+  @Input() showBarNames: boolean;
 
   @Output() select = new EventEmitter();
   @Output() activate = new EventEmitter();
@@ -119,13 +130,18 @@ export class SeriesVerticalComponent implements OnChanges {
         roundEdges,
         data: d,
         width,
+        id: null,
         formattedLabel,
         height: 0,
         x: 0,
         y: 0,
-        showvalue: value
+        regularLabel: null,
+        regularLabelShort: null,
+        showvalue: value,
+        customGroupColor: null
       };
-
+      bar.regularLabel = label;
+      bar.regularLabelShort = label.split(" ")[0]+"...";
       if (this.type === 'standard') {
         bar.height = Math.abs(this.yScale(value) - this.yScale(0));
         bar.x = this.xScale(label);

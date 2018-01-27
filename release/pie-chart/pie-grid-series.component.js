@@ -34,12 +34,22 @@ var PieGridSeriesComponent = /** @class */ (function () {
                 arc.startAngle = 0;
             }
             var color = _this.colors(label);
+            var settedColor = "#b1c0cf";
+            if (index === 0) {
+                settedColor = "#88cedf";
+            }
+            var settedStartAngle = arc.startAngle;
+            var settedEndAngle = arc.endAngle;
+            if (index === 1) {
+                settedStartAngle = arc.endAngle - 0.025;
+                settedEndAngle = arc.startAngle + 0.025;
+            }
             return {
                 data: arc.data.data,
                 class: 'arc ' + 'arc' + index,
-                fill: color,
-                startAngle: other ? 0 : arc.startAngle,
-                endAngle: arc.endAngle,
+                fill: settedColor,
+                startAngle: settedStartAngle,
+                endAngle: settedEndAngle,
                 animate: _this.animations && !other,
                 pointerEvents: !other
             };
@@ -87,7 +97,7 @@ var PieGridSeriesComponent = /** @class */ (function () {
     PieGridSeriesComponent = __decorate([
         Component({
             selector: 'g[ngx-charts-pie-grid-series]',
-            template: "\n    <svg:g class=\"pie-grid-arcs\">\n      <svg:g ngx-charts-pie-arc *ngFor=\"let arc of arcs; trackBy:trackBy\"\n        [attr.class]=\"arc.class\"\n        [startAngle]=\"arc.startAngle\"\n        [endAngle]=\"arc.endAngle\"\n        [innerRadius]=\"innerRadius\"\n        [outerRadius]=\"outerRadius\"\n        [fill]=\"color(arc)\"\n        [value]=\"arc.data.value\"\n        [data]=\"arc.data\"\n        [max]=\"max\"\n        [gradient]=\"false\"\n        [pointerEvents]=\"arc.pointerEvents\"\n        [animate]=\"arc.animate\"\n        (select)=\"onClick($event)\">\n      </svg:g>\n    </svg:g>\n  ",
+            template: "\n    <svg:g class=\"pie-grid-arcs\">\n      <svg:g ngx-charts-pie-arc *ngFor=\"let arc of arcs; trackBy:trackBy\"\n        [attr.class]=\"arc.class\"\n        [startAngle]=\"arc.startAngle\"\n        [endAngle]=\"arc.endAngle\"\n        [innerRadius]=\"49\"\n        [outerRadius]=\"88\"\n        [fill]=\"'#efefef'\"\n        [value]=\"arc.data.value\"\n        [data]=\"arc.data\"\n        [max]=\"max\"\n        [gradient]=\"false\"\n        [pointerEvents]=\"arc.pointerEvents\"\n        [animate]=\"arc.animate\"\n        (select)=\"onClick($event)\">\n      </svg:g>\n      <svg:g ngx-charts-pie-arc *ngFor=\"let arc of arcs; trackBy:trackBy\"\n        [attr.class]=\"arc.class\"\n        [startAngle]=\"arc.startAngle\"\n        [endAngle]=\"arc.endAngle\"\n        [innerRadius]=\"62\"\n        [outerRadius]=\"88\"\n        [fill]=\"arc.fill\"\n        [value]=\"arc.data.value\"\n        [data]=\"arc.data\"\n        [max]=\"max\"\n        [gradient]=\"false\"\n        [pointerEvents]=\"arc.pointerEvents\"\n        [animate]=\"arc.animate\"\n        (select)=\"onClick($event)\">\n      </svg:g>\n    </svg:g>\n  ",
             changeDetection: ChangeDetectionStrategy.OnPush,
         }),
         __metadata("design:paramtypes", [ElementRef])

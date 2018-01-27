@@ -13,9 +13,14 @@ export declare class BarComponent implements OnChanges {
     isActive: boolean;
     stops: any[];
     animations: boolean;
-    showvalue: string;
+    showvalue: number;
     enableBarValues: boolean;
     barValuesAppendString: string;
+    customGroupColor: string;
+    barid: number;
+    showBarNames: boolean;
+    regularLabel: string;
+    regularLabelShort: string;
     select: EventEmitter<{}>;
     activate: EventEmitter<{}>;
     deactivate: EventEmitter<{}>;

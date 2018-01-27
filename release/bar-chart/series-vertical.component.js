@@ -45,12 +45,18 @@ var SeriesVerticalComponent = /** @class */ (function () {
                 roundEdges: roundEdges,
                 data: d,
                 width: width,
+                id: null,
                 formattedLabel: formattedLabel,
                 height: 0,
                 x: 0,
                 y: 0,
-                showvalue: value
+                regularLabel: null,
+                regularLabelShort: null,
+                showvalue: value,
+                customGroupColor: null
             };
+            bar.regularLabel = label;
+            bar.regularLabelShort = label.split(" ")[0] + "...";
             if (_this.type === 'standard') {
                 bar.height = Math.abs(_this.yScale(value) - _this.yScale(0));
                 bar.x = _this.xScale(label);
@@ -191,6 +197,14 @@ var SeriesVerticalComponent = /** @class */ (function () {
         __metadata("design:type", String)
     ], SeriesVerticalComponent.prototype, "barValuesAppendString", void 0);
     __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], SeriesVerticalComponent.prototype, "customGroupColor", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], SeriesVerticalComponent.prototype, "showBarNames", void 0);
+    __decorate([
         Output(),
         __metadata("design:type", Object)
     ], SeriesVerticalComponent.prototype, "select", void 0);
@@ -205,7 +219,7 @@ var SeriesVerticalComponent = /** @class */ (function () {
     SeriesVerticalComponent = __decorate([
         Component({
             selector: 'g[ngx-charts-series-vertical]',
-            template: "\n    <svg:g ngx-charts-bar\n      *ngFor=\"let bar of bars; trackBy: trackBy\"\n      [@animationState]=\"'active'\"\n      [@.disabled]=\"!animations\"\n      [width]=\"bar.width\"\n      [height]=\"bar.height\"\n      [x]=\"bar.x\"\n      [y]=\"bar.y\"\n      [fill]=\"bar.color\"\n      [stops]=\"bar.gradientStops\"\n      [data]=\"bar.data\"\n      [showvalue]=\"bar.showvalue\"\n      [enableBarValues]=\"enableBarValues\"\n      [barValuesAppendString]=\"barValuesAppendString\"\n      [orientation]=\"'vertical'\"\n      [roundEdges]=\"bar.roundEdges\"\n      [gradient]=\"gradient\"\n      [isActive]=\"isActive(bar.data)\"\n      (select)=\"onClick($event)\"\n      (activate)=\"activate.emit($event)\"\n      (deactivate)=\"deactivate.emit($event)\"\n      ngx-tooltip\n      [tooltipDisabled]=\"tooltipDisabled\"\n      [tooltipPlacement]=\"tooltipPlacement\"\n      [tooltipType]=\"tooltipType\"\n      [tooltipTitle]=\"tooltipTemplate ? undefined : bar.tooltipText\"\n      [tooltipTemplate]=\"tooltipTemplate\"\n      [tooltipContext]=\"bar.data\"\n      [animations]=\"animations\">\n    </svg:g>\n  ",
+            template: "\n    <svg:g ngx-charts-bar\n      *ngFor=\"let bar of bars; let i = index; trackBy: trackBy\"\n      [@animationState]=\"'active'\"\n      [@.disabled]=\"!animations\"\n      [width]=\"bar.width\"\n      [height]=\"bar.height\"\n      [x]=\"bar.x\"\n      [y]=\"bar.y\"\n      [fill]=\"bar.color\"\n      [stops]=\"bar.gradientStops\"\n      [data]=\"bar.data\"\n      [showBarNames]=\"showBarNames\"\n      [regularLabel]=\"bar.regularLabel\"\n      [regularLabelShort]=\"bar.regularLabelShort\"\n      [showvalue]=\"bar.showvalue\"\n      [enableBarValues]=\"enableBarValues\"\n      [barValuesAppendString]=\"barValuesAppendString\"\n      [orientation]=\"'vertical'\"\n      [roundEdges]=\"bar.roundEdges\"\n      [gradient]=\"gradient\"\n      [barid]=\"i\"\n      [customGroupColor]=\"customGroupColor\"\n      [isActive]=\"isActive(bar.data)\"\n      (select)=\"onClick($event)\"\n      (activate)=\"activate.emit($event)\"\n      (deactivate)=\"deactivate.emit($event)\"\n      ngx-tooltip\n      [tooltipDisabled]=\"tooltipDisabled\"\n      [tooltipPlacement]=\"tooltipPlacement\"\n      [tooltipType]=\"tooltipType\"\n      [tooltipTitle]=\"tooltipTemplate ? undefined : bar.tooltipText\"\n      [tooltipTemplate]=\"tooltipTemplate\"\n      [tooltipContext]=\"bar.data\"\n      [animations]=\"animations\">\n    </svg:g>\n    <svg:pattern *ngIf = \"customGroupColor\" id=\"diagonalHatch{{customGroupColor.replace('#','')}}\" width=\"5\" height=\"5\" patternTransform=\"rotate(50 0 0)\" patternUnits=\"userSpaceOnUse\">\n      <svg:rect [attr.fill]=\"customGroupColor\" width=\"14\" height=\"14\"></rect>\n      <svg:line x1=\"0\" y1=\"0\" x2=\"0\" y2=\"10\" style=\"stroke:#fff; stroke-width:8\"></line>\n    </pattern>\n  ",
             changeDetection: ChangeDetectionStrategy.OnPush,
             animations: [
                 trigger('animationState', [

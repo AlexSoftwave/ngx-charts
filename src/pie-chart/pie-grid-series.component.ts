@@ -18,9 +18,24 @@ import { pie } from 'd3-shape';
         [attr.class]="arc.class"
         [startAngle]="arc.startAngle"
         [endAngle]="arc.endAngle"
-        [innerRadius]="innerRadius"
-        [outerRadius]="outerRadius"
-        [fill]="color(arc)"
+        [innerRadius]="49"
+        [outerRadius]="88"
+        [fill]="'#efefef'"
+        [value]="arc.data.value"
+        [data]="arc.data"
+        [max]="max"
+        [gradient]="false"
+        [pointerEvents]="arc.pointerEvents"
+        [animate]="arc.animate"
+        (select)="onClick($event)">
+      </svg:g>
+      <svg:g ngx-charts-pie-arc *ngFor="let arc of arcs; trackBy:trackBy"
+        [attr.class]="arc.class"
+        [startAngle]="arc.startAngle"
+        [endAngle]="arc.endAngle"
+        [innerRadius]="62"
+        [outerRadius]="88"
+        [fill]="arc.fill"
         [value]="arc.data.value"
         [data]="arc.data"
         [max]="max"
@@ -71,14 +86,28 @@ export class PieGridSeriesComponent implements OnChanges {
       if (index === 0) {
         arc.startAngle = 0;
       }
-
       const color = this.colors(label);
+
+      var settedColor = "#b1c0cf";
+      if(index === 0){
+        settedColor = "#88cedf";
+      }
+
+
+      var settedStartAngle = arc.startAngle;
+      var settedEndAngle = arc.endAngle;
+      if(index === 1){
+        settedStartAngle = arc.endAngle - 0.025;
+        settedEndAngle = arc.startAngle + 0.025;
+      }
+
+
       return {
         data: arc.data.data,
         class: 'arc ' + 'arc' + index,
-        fill: color,
-        startAngle: other ? 0 : arc.startAngle,
-        endAngle: arc.endAngle,
+        fill: settedColor,
+        startAngle: settedStartAngle,
+        endAngle: settedEndAngle,
         animate: this.animations && !other,
         pointerEvents: !other
       };

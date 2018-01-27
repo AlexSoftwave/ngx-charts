@@ -45,7 +45,6 @@ import { formatLabel } from '../common/label.helper';
           />
           <svg:text *ngIf="animations"
             class="label percent-label"
-            dy="-0.5em"
             x="0"
             y="5"
             ngx-charts-count-up
@@ -55,7 +54,6 @@ import { formatLabel } from '../common/label.helper';
           </svg:text>
           <svg:text *ngIf="!animations"
             class="label percent-label"
-            dy="-0.5em"
             x="0"
             y="5"
             text-anchor="middle">
@@ -63,21 +61,11 @@ import { formatLabel } from '../common/label.helper';
           </svg:text>
           <svg:text
             class="label"
-            dy="0.5em"
+            dy="-7.6em"
             x="0"
             y="5"
             text-anchor="middle">
             {{series.label}}
-          </svg:text>
-          <svg:text *ngIf="animations"
-            class="label"
-            dy="1.23em"
-            x="0"
-            [attr.y]="series.outerRadius"
-            text-anchor="middle"
-            ngx-charts-count-up
-            [countTo]="series.total"
-            [countPrefix]="'Total: '">
           </svg:text>
           <svg:text *ngIf="!animations"
             class="label"
@@ -109,7 +97,7 @@ export class PieGridComponent extends BaseChartComponent {
   series: any[];
   domain: any[];
   colorScale: ColorHelper;
-  margin = [20, 20, 20, 20];
+  margin = [0, 20, 0, 20];
 
   @ContentChild('tooltipTemplate') tooltipTemplate: TemplateRef<any>;
 
@@ -160,12 +148,7 @@ export class PieGridComponent extends BaseChartComponent {
 
       let count = 0;
       const colors = () => {
-        count += 1;
-        if (count === 1) {
-          return 'rgba(100,100,100,0.3)';
-        } else {
-          return this.colorScale.getColor(label);
-        }
+        return this.colorScale.getColor(label);
       };
 
       const xPos = d.x + (d.width - padding) / 2;

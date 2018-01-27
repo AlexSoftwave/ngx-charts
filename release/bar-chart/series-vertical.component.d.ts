@@ -15,6 +15,8 @@ export declare class SeriesVerticalComponent implements OnChanges {
     animations: boolean;
     enableBarValues: boolean;
     barValuesAppendString: string;
+    customGroupColor: string;
+    showBarNames: boolean;
     select: EventEmitter<{}>;
     activate: EventEmitter<{}>;
     deactivate: EventEmitter<{}>;

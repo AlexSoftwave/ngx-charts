@@ -60,7 +60,7 @@ import { BaseChartComponent } from '../common/base-chart.component';
           (dimensionsChanged)="updateYAxisWidth($event)">
         </svg:g>
         <svg:g ngx-charts-series-vertical
-          *ngFor="let group of results; trackBy:trackBy"
+          *ngFor="let group of results; let i = index; trackBy:trackBy"
           [@animationState]="'active'"
           [attr.transform]="groupTransform(group)"
           [activeEntries]="activeEntries"
@@ -77,6 +77,8 @@ import { BaseChartComponent } from '../common/base-chart.component';
           [seriesName]="group.name"
           [roundEdges]="roundEdges"
           [animations]="animations"
+          [showBarNames]="showBarNames"
+          [customGroupColor]="chartGroupColors?chartGroupColors[i]:null"
           (select)="onClick($event, group)"
           (activate)="onActivate($event, group)"
           (deactivate)="onDeactivate($event, group)"
@@ -124,6 +126,8 @@ export class BarVertical2DComponent extends BaseChartComponent {
   @Input() yScaleMax: number;
   @Input() enableBarValues: boolean;
   @Input() barValuesAppendString: string;
+  @Input() chartGroupColors: any[];
+  @Input() showBarNames: boolean;
 
   @Output() activate: EventEmitter<any> = new EventEmitter();
   @Output() deactivate: EventEmitter<any> = new EventEmitter();
@@ -139,7 +143,7 @@ export class BarVertical2DComponent extends BaseChartComponent {
   valueScale: any;
   transform: string;
   colors: ColorHelper;
-  margin = [25, 0, 10, 0];
+  margin = [25, 0, 25, 0];
   xAxisHeight: number = 0;
   yAxisWidth: number = 0;
   legendOptions: any;
