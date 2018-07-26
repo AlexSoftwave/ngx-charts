@@ -21,6 +21,7 @@ export declare class BarComponent implements OnChanges {
     showBarNames: boolean;
     regularLabel: string;
     regularLabelShort: string;
+    barFalueFontSize: number;
     select: EventEmitter<{}>;
     activate: EventEmitter<{}>;
     deactivate: EventEmitter<{}>;

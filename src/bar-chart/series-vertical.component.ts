@@ -35,6 +35,7 @@ import { formatLabel } from '../common/label.helper';
       [showvalue]="bar.showvalue"
       [enableBarValues]="enableBarValues"
       [barValuesAppendString]="barValuesAppendString"
+      [barFalueFontSize]="barFalueFontSize"
       [orientation]="'vertical'"
       [roundEdges]="bar.roundEdges"
       [gradient]="gradient"
@@ -89,6 +90,8 @@ export class SeriesVerticalComponent implements OnChanges {
   @Input() barValuesAppendString: string;
   @Input() customGroupColor: string;
   @Input() showBarNames: boolean;
+
+  @Input() barFalueFontSize: number;
 
   @Output() select = new EventEmitter();
   @Output() activate = new EventEmitter();

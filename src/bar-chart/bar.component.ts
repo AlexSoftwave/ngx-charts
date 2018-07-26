@@ -12,6 +12,7 @@ import {
 import { select } from 'd3-selection';
 import { roundedRect } from '../common/shape.helper';
 import { id } from '../utils/id';
+import { SVGEllipsisDirective } from './svg-ellipsis.directive';
 
 @Component({
   selector: 'g[ngx-charts-bar]',
@@ -32,27 +33,25 @@ import { id } from '../utils/id';
       (click)="select.emit(data)"
     />
     <svg:text *ngIf="enableBarValues"
-      font-size="11"
       text-anchor="middle"
       style="direction:ltr;"
+      [attr.font-size]="barFalueFontSize"
       [attr.x]="x+width/2"
       [attr.y]="showvalue>0?y-10:y+height+15"
       [attr.width]="width"
       >
       {{showvalue}}{{barValuesAppendString}}
     </svg:text>
-    <svg:text *ngIf="showBarNames"
+    <svg:text ellipsis *ngIf="showBarNames"
+      [text]="regularLabel"
       font-size="12"
       text-anchor="middle"
       style="direction:rtl;"
       [attr.x]="x+width/2"
       [attr.y]="y+height+25"
       [attr.width]="width"
-      >
-      {{regularLabelShort}}
-      <title>{{regularLabel}}</title>
-    </svg:text>
-
+      [width]="width"
+      ></svg:text>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -79,6 +78,8 @@ export class BarComponent implements OnChanges {
   @Input() showBarNames: boolean;
   @Input() regularLabel: string;
   @Input() regularLabelShort: string;
+
+  @Input() barFalueFontSize: number;
 
   @Output() select = new EventEmitter();
   @Output() activate = new EventEmitter();
@@ -249,3 +250,4 @@ export class BarComponent implements OnChanges {
   }
 
 }
+ 

@@ -19,6 +19,7 @@ import { scaleBand, scaleLinear } from 'd3-scale';
 import { calculateViewDimensions, ViewDimensions } from '../common/view-dimensions.helper';
 import { ColorHelper } from '../common/color.helper';
 import { BaseChartComponent } from '../common/base-chart.component';
+import { variance } from 'd3-array';
 
 @Component({
   selector: 'ngx-charts-bar-vertical-2d',
@@ -78,6 +79,7 @@ import { BaseChartComponent } from '../common/base-chart.component';
           [roundEdges]="roundEdges"
           [animations]="animations"
           [showBarNames]="showBarNames"
+          [barFalueFontSize]="barValueFontSize"
           [customGroupColor]="chartGroupColors?chartGroupColors[i]:null"
           (select)="onClick($event, group)"
           (activate)="onActivate($event, group)"
@@ -128,6 +130,10 @@ export class BarVertical2DComponent extends BaseChartComponent {
   @Input() barValuesAppendString: string;
   @Input() chartGroupColors: any[];
   @Input() showBarNames: boolean;
+  @Input() barWidth: number = -1;
+  @Input() view: any;
+  
+  @Input() barValueFontSize: number = 11;
 
   @Output() activate: EventEmitter<any> = new EventEmitter();
   @Output() deactivate: EventEmitter<any> = new EventEmitter();
@@ -179,25 +185,56 @@ export class BarVertical2DComponent extends BaseChartComponent {
     this.legendOptions = this.getLegendOptions();
 
     this.transform = `translate(0 , ${ this.margin[0] })`;
+
+    super.update();
   }
 
   getGroupScale(): any {
-    const spacing = this.groupDomain.length / (this.dims.height / this.groupPadding + 1);
+    if(this.barWidth == -1){
+      const spacing = this.groupDomain.length / (this.dims.height / this.groupPadding + 1);
+      return scaleBand()
+        .rangeRound([0, this.dims.width])
+        .paddingInner(spacing)
+        .paddingOuter(spacing / 2)
+        .domain(this.groupDomain);
+    } else {
+      var columnNumber = 2;
+      if(typeof this.results[0] !== 'undefined'){
+        columnNumber = this.results[0].series.length;
+      }
+      const spacing = this.groupPadding/(this.barWidth*columnNumber+this.barPadding*(columnNumber-1) + this.groupPadding );
 
-    return scaleBand()
-      .rangeRound([0, this.dims.width])
-      .paddingInner(spacing)
-      .paddingOuter(spacing / 2)
-      .domain(this.groupDomain);
+      const newWidth = this.groupPadding*(this.groupDomain.length-1) + this.barWidth*columnNumber*this.groupDomain.length + this.barPadding*(columnNumber-1)*this.groupDomain.length + this.groupPadding;
+      
+      this.dims.width = newWidth;
+      this.view[0] = this.dims.width+this.dims.xOffset;
+      this.view = Object.assign({}, this.view);
+      
+      return scaleBand()
+        .rangeRound([0, newWidth])
+        .paddingInner(spacing)
+        .paddingOuter(spacing/2)
+        .domain(this.groupDomain);
+    }
   }
 
   getInnerScale(): any {
-    const width = this.groupScale.bandwidth();
-    const spacing = this.innerDomain.length / (width / this.barPadding + 1);
-    return scaleBand()
-      .rangeRound([0, width])
-      .paddingInner(spacing)
-      .domain(this.innerDomain);
+
+    if(this.barWidth == -1){
+      const width = this.groupScale.bandwidth();
+      const spacing = this.innerDomain.length / (width / this.barPadding + 1);
+      return scaleBand()
+        .rangeRound([0, width])
+        .paddingInner(spacing)
+        .domain(this.innerDomain);
+    } else {
+      const width = this.groupScale.bandwidth();
+      const spacing = this.barPadding/(this.barWidth+this.barPadding);
+      return scaleBand()
+        .rangeRound([0, width])
+        .paddingInner(spacing)
+        .domain(this.innerDomain);
+    }
   }
 
   getValueScale(): any {

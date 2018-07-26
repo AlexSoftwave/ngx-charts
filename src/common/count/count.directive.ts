@@ -65,7 +65,7 @@ export class CountUpDirective implements OnDestroy {
 
   private animationReq: any;
 
-  private _countDecimals: number = 0;
+  private _countDecimals: number = 2;
   private _countTo: number = 0;
   private _countFrom: number = 0;
 

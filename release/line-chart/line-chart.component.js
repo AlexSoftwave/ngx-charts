@@ -238,8 +238,8 @@ var LineChartComponent = /** @class */ (function (_super) {
         this.deactivateAll();
     };
     LineChartComponent.prototype.hideCircles = function () {
-        this.hoveredVertical = null;
-        this.deactivateAll();
+        //this.hoveredVertical = null;
+        //this.deactivateAll();
     };
     LineChartComponent.prototype.onClick = function (data, series) {
         if (series) {

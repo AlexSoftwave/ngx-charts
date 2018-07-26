@@ -57,7 +57,7 @@ import { formatLabel } from '../common/label.helper';
             x="0"
             y="5"
             text-anchor="middle">
-            {{series.percent.toLocaleString()}}
+            {{series.percent}}
           </svg:text>
           <svg:text
             class="label"
@@ -163,7 +163,7 @@ export class PieGridComponent extends BaseChartComponent {
         label: trimLabel(label),
         total: value,
         value,
-        percent: format('.1%')(d.data.percent),
+        percent: (parseFloat(d.data.percent)*100).toFixed(2),
         data: [d, {
           data: {
             other: true,

@@ -11,6 +11,7 @@ import { BarVerticalNormalizedComponent } from './bar-vertical-normalized.compon
 import { BarVerticalStackedComponent } from './bar-vertical-stacked.component';
 import { SeriesHorizontal } from './series-horizontal.component';
 import { SeriesVerticalComponent } from './series-vertical.component';
+import { SVGEllipsisDirective } from './svg-ellipsis.directive';
 
 export {
   BarComponent, BarHorizontalComponent, BarHorizontal2DComponent,
@@ -33,7 +34,8 @@ export {
     BarVerticalNormalizedComponent,
     BarVerticalStackedComponent,
     SeriesHorizontal,
-    SeriesVerticalComponent
+    SeriesVerticalComponent,
+    SVGEllipsisDirective
   ],
   exports: [
     BarComponent,
